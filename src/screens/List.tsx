@@ -6,6 +6,38 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
+import gql from 'graphql-tag';
+import {Query} from 'react-apollo';
+
+const SEARCH_REPO = gql`
+  query {
+    repository(owner: "facebook", name: "react-native") {
+      issues(first: 100) {
+        totalCount
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+        edges {
+          node {
+            title
+            url
+            createdAt
+            closed
+            labels(first: 3) {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 interface State {
   list: any;
 }
@@ -17,10 +49,13 @@ export default class List extends React.Component<{}, State> {
       list: [],
     };
   }
+
   componentDidMount() {}
 
   render() {
     return (
+      <Query query={SEARCH_REPO}>
+        {({loading, error, data, refetch}: any) => (
           <SafeAreaView style={{flex: 1, backgroundColor: 'red'}}>
             {loading ? <ActivityIndicator /> : null}
             {!loading ? (
@@ -34,6 +69,8 @@ export default class List extends React.Component<{}, State> {
               />
             ) : null}
           </SafeAreaView>
+        )}
+      </Query>
     );
   }
 }
