@@ -8,11 +8,12 @@ import {
 import React from 'react';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
+import Issue from '../components/Issue';
 
 const SEARCH_REPO = gql`
   query {
     repository(owner: "facebook", name: "react-native") {
-      issues(first: 100) {
+      issues(last: 100) {
         totalCount
         pageInfo {
           endCursor
@@ -56,16 +57,12 @@ export default class List extends React.Component<{}, State> {
     return (
       <Query query={SEARCH_REPO}>
         {({loading, error, data, refetch}: any) => (
-          <SafeAreaView style={{flex: 1, backgroundColor: 'red'}}>
+          <SafeAreaView style={{flex: 1, padding: 20}}>
             {loading ? <ActivityIndicator /> : null}
             {!loading ? (
               <FlatList
                 data={data.repository.issues.edges}
-                renderItem={({item}: any) => (
-                  <View>
-                    <Text>{item.node.title}</Text>
-                  </View>
-                )}
+                renderItem={({item}: any) => <Issue item={item.node} />}
               />
             ) : null}
           </SafeAreaView>
