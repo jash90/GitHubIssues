@@ -8,25 +8,24 @@ export const IssueComponent = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size:18px;
-  padding-top:5px;
-  padding-bottom:5px;
+  font-size: 18px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 `;
 
 export const RowBetween = styled.View`
-  flex-direction:row;
-  align-items:center;
-  justify-content:space-between;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 export const TagView = styled.View`
-background-color: ${(props:any)=>props.color};
-padding:7px;
-border-radius:20px;
-margin-right:5px;
+  background-color: ${(props: any) => props.color};
+  padding: 7px;
+  border-radius: 20px;
+  margin-right: 5px;
 `;
 
-
 export const TagText = styled.Text`
-color:white;
+  color: white;
 `;

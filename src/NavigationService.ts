@@ -1,11 +1,17 @@
-import { NavigationActions, StackActions } from 'react-navigation';
-import { NavigationContainerComponent, NavigationRoute, NavigationScreenProp } from 'react-navigation';
+import {NavigationActions, StackActions} from 'react-navigation';
+import {
+  NavigationContainerComponent,
+  NavigationRoute,
+  NavigationScreenProp,
+} from 'react-navigation';
 import {Screen} from './Screens';
 
 export default class NavigationService {
-  static navigator: NavigationContainerComponent|any;
+  static navigator: NavigationContainerComponent | any;
 
-  public static setTopLevelNavigator(navigatorRef: NavigationContainerComponent) {
+  public static setTopLevelNavigator(
+    navigatorRef: NavigationContainerComponent,
+  ) {
     this.navigator = navigatorRef;
   }
 
@@ -14,24 +20,19 @@ export default class NavigationService {
       NavigationActions.navigate({
         routeName,
         params,
-      })
+      }),
     );
   }
 
   public static goBack() {
-    this.navigator.dispatch(
-      NavigationActions.back()
-    );
+    this.navigator.dispatch(NavigationActions.back());
   }
 
-  public static reset(routeName:Screen) {
+  public static reset(routeName: Screen) {
     const resetAction = StackActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName })]
+      actions: [NavigationActions.navigate({routeName})],
     });
-    this.navigator.dispatch(
-     resetAction
-    );
+    this.navigator.dispatch(resetAction);
   }
-
 }

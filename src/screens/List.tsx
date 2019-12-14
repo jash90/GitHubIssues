@@ -10,7 +10,7 @@ import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
 import Issue from '../components/Issue';
 
-const SEARCH_REPO = gql`
+const GET_ISSUES = gql`
   query {
     repository(owner: "facebook", name: "react-native") {
       issues(last: 100) {
@@ -55,18 +55,20 @@ export default class List extends React.Component<{}, State> {
 
   render() {
     return (
-      <Query query={SEARCH_REPO}>
-        {({loading, error, data, refetch}: any) => (
-          <SafeAreaView style={{flex: 1, padding: 20}}>
-            {loading ? <ActivityIndicator /> : null}
-            {!loading ? (
-              <FlatList
-                data={data.repository.issues.edges}
-                renderItem={({item}: any) => <Issue item={item.node} />}
-              />
-            ) : null}
-          </SafeAreaView>
-        )}
+      <Query query={GET_ISSUES}>
+        {({loading, error, data, fetchMore}: any) => {
+          return (
+            <SafeAreaView style={{flex: 1, padding: 20}}>
+              {loading ? <ActivityIndicator /> : null}
+              {!loading ? (
+                <FlatList
+                  data={data.repository.issues.edges}
+                  renderItem={({item}: any) => <Issue item={item.node} />}
+                />
+              ) : null}
+            </SafeAreaView>
+          );
+        }}
       </Query>
     );
   }
