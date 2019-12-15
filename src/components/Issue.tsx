@@ -28,6 +28,7 @@ export default class Issue extends React.Component<Props, {}> {
           style={{paddingVertical: 5}}
           data={this.props.item.labels.edges}
           showsHorizontalScrollIndicator={false}
+          keyExtractor={(item:any, index:any)=>item.node.id}
           renderItem={({item}: any) => (
             <TagView color={this.getRandomColor(item.node.name)}>
               <TagText>{item.node.name}</TagText>
